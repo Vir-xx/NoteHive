@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Details - NoteHive AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.js"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+    <header class="bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center">
+        <a href="dashboard.html" class="text-2xl font-bold">NoteHive AI 🐝</a>
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+             </button>
+    </header>
+
+    <main class="p-8 max-w-4xl mx-auto">
+        <div id="note-content" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+            </div>
+
+        <div class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Comments</h3>
+            <div id="comments-list" class="space-y-4">
+                </div>
+            <div class="mt-6">
+                <textarea id="comment-input" class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" rows="3" placeholder="Add a comment..."></textarea>
+                <button id="post-comment-btn" class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Post Comment</button>
+            </div>
+        </div>
+    </main>
+    
+    <div id="qr-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 text-center relative">
+            <button id="close-qr-modal" class="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h3 class="text-2xl font-bold mb-4">Scan QR Code</h3>
+            <div id="qrcode-container" class="flex justify-center">
+                </div>
+            <p class="mt-4 text-sm text-gray-500">Scan this code to get a direct link to this note.</p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
