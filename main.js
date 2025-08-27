@@ -53,6 +53,31 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('notesData', JSON.stringify(notesData));
     };
 
+    // --- Toast Notification Function ---
+    const showToast = (message, type = 'success') => {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+        
+        toast.className = `p-4 rounded-lg shadow-lg text-white ${bgColor} transform transition-all duration-300 translate-x-full opacity-0`;
+        toast.textContent = message;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.remove('translate-x-full', 'opacity-0');
+        }, 10);
+
+        setTimeout(() => {
+            toast.classList.add('translate-x-full', 'opacity-0');
+            toast.addEventListener('transitionend', () => {
+                toast.remove();
+            });
+        }, 3000);
+    };
+
     // --- Theme Toggler ---
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
@@ -67,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('dark'); }
     if (themeIcon) { themeIcon.innerHTML = document.documentElement.classList.contains('dark') ? sunIcon : moonIcon; }
     if (themeToggle) { themeToggle.addEventListener('click', toggleTheme); }
-
+    
     // --- Login Logic ---
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
@@ -166,12 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const description = document.getElementById('note-desc').value;
                 const tagsInput = document.getElementById('note-tags').value;
                 const file = fileInput.files[0];
-                if (!title || !file) { alert('Please provide a title and select a file.'); return; }
+                if (!title || !file) {
+                    showToast('Please provide a title and select a file.', 'error');
+                    return;
+                }
                 const tags = tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
                 const newNote = { id: Date.now(), title: title, summary: description || `Note about ${title}`, tags: tags.length > 0 ? tags : ['Untagged'], comments: [], status: 'Pending' };
                 notesData.push(newNote);
                 saveNotes();
-                alert('Note uploaded successfully! It will be visible after admin approval.');
+                showToast('Note uploaded! It will be visible after admin approval.');
                 uploadModal.classList.add('hidden');
                 fileNameDisplay.innerHTML = `Drag & drop or <span class="text-indigo-500 font-semibold">browse</span>`;
                 uploadForm.reset();
